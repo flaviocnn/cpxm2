@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
-
+import { View, StatusBar } from 'react-native';
+import CategoryCard from '../../components/CategoryCard';
 export default class Home extends Component {
-    click ( ){
+    click() {
 
     }
 
     render() {
         return (
-            <View>
-                <Text>Hello world</Text>
+            <View style={{ marginTop: StatusBar.currentHeight }}>
+                <CategoryCard />
             </View>
+
         )
     }
 }
