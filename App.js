@@ -14,8 +14,8 @@ import Signup from './screens/signup/Signup';
 const AuthStack = createStackNavigator();
 function AuthStackComponent() {
   return (
-    <AuthStack.Navigator initialRouteName="Login" mode="modal" headerMode="none">
-      <AuthStack.Screen name="Login" component={Signin} />
+    <AuthStack.Navigator initialRouteName="Login" mode="card" headerMode="none">
+      <AuthStack.Screen name="Accedi" component={Signin} />
       <AuthStack.Screen name="Registrati" component={Signup} />
     </AuthStack.Navigator>
   )

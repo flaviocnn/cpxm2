@@ -15,26 +15,59 @@ import { withFirebaseHOC } from "../../services/GlobalContext";
 
 class Signin extends Component {
 
-    click() {
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: '',
+            password: '',
+        }
+        this.loginHandler = this.loginHandler.bind(this);
 
+    }
+
+    async loginHandler() {
+        const email = this.state.email;
+        const psw = this.state.password;
+        this.props.firebase.loginWithEmail(email, psw)
+        .then((res) =>{
+            // logged successfully
+            console.log(res);
+            // to-do: naviga al profilo
+        })
+        .catch((reason) => {
+            // c'è n problema
+            console.info(reason);
+        })
     }
 
     render() {
         return (
             <ImageBackground source={require('../../assets/bg2.png')} style={styles.image}>
-            <KeyboardAvoidingView style={styles.container} enabled behavior="padding">
+                <KeyboardAvoidingView style={styles.container} enabled behavior="padding">
                     <ScrollView>
-                        <Input placeholder="Password" secureTextEntry={true} />
+                        <Input
+                            placeholder="Email"
+                            onChangeText={value => this.setState({ email: value })} 
+                        />
+                        <Input
+                            placeholder="Password"
+                            secureTextEntry={true}
+                            onChangeText={value => this.setState({ password: value })} 
+                        />
                         <Button
-                            title="Have an account? Login"
-                            onPress={this.click()}
-                            titleStyle={{
-                                color: "#039BE5"
-                            }}
+                            title="Login"
+                            onPress={this.loginHandler}
+                            titleStyle={styles.buttonTitleStyle}
+                            type="clear"
+                        />
+                        <Button
+                            title="Registrati"
+                            onPress={() => {this.props.navigation.navigate('Registrati')}}
+                            titleStyle={styles.buttonTitleStyle}
                             type="clear"
                         />
                     </ScrollView>
-            </KeyboardAvoidingView>
+                </KeyboardAvoidingView>
             </ImageBackground>
         )
     }
@@ -54,4 +87,9 @@ const styles = StyleSheet.create({
         width: "100%",
         height: Dimensions.get('window').height,
     },
+    buttonTitleStyle: {
+        color: "#039BE5",
+        fontWeight:"400",
+        textTransform: "uppercase"
+    }
 });
