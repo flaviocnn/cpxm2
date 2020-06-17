@@ -1,49 +1,67 @@
-import React, { Component } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
-import { Card, Image } from 'react-native-elements';
-import { colors } from '../../styles/base';
+import React, { Component } from "react";
+import {
+    StyleSheet,
+    Dimensions,
+    Text,
+    View,
+    ImageBackground,
+    TouchableOpacity,
+    KeyboardAvoidingView,
+    ScrollView
+} from "react-native";
 
-const CategoryCard = props => {
-    return (
-        <Card /* image={require("../assets/david-armstrong-srpE-a5W418-unsplash.jpg")} */ containerStyle={styles.card}>
-            <Image
-                source={{ uri: "https://www.luxorcairohotel.it/sites/default/files/styles/slide/public/go_kart_0_0.jpg?itok=33q8_WC3" }}
-                style={styles.cardImage}
-            />
-            <View style={styles.cardContent}>
-                <Text style={styles.cardTitle}>
-                    Centro Sportivo Creta Rossa
-                </Text>
-            </View>
-
-        </Card>
-
-    );
-};
-
-const styles = StyleSheet.create({
-    card: {
-        padding: 0,
-        borderRadius: 10,
-        flex: 0,
-        height: 260
-    },
-    cardImage: {
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
-        height: 140
-    },
-    cardContent: {
-        margin: 20
-    },
-    cardTitle: {
-        fontFamily: "Roboto",
-        fontWeight: "bold",
-        fontSize: 19,
-        lineHeight: 19,
-        color: "#323232"
+export default class CategoryCard extends Component {
+    constructor(props) {
+        super(props);
     }
 
-});
+    render() {
+        var category = this.props.categoryItem;
 
-export default CategoryCard;
+        return (
+
+            <View style={styles.container}>
+                <ImageBackground
+                source={require('../../assets/taglio-uomo.jpg')} 
+                style={styles.image}
+                >
+                    <Text
+                        style={styles.titleText}
+                    >
+                        {category?.name}
+                    </Text>
+                </ImageBackground>
+
+            </View>
+        )
+    }
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flexGrow: 1,
+        alignItems: "center",
+        backgroundColor: "blue",
+        justifyContent: "center",
+        //width:Dimensions.get("screen").width /2 -10,
+        //width:"40%",
+        height: 120,
+        margin: 5,
+        borderRadius: 10,
+        overflow:"hidden"
+    },
+    image: {
+        flex: 1,
+        resizeMode: "cover",
+        justifyContent: "center",
+        height: "100%",
+        width: "100%",
+    },
+    titleText: {
+        fontSize: 20,
+        textAlign: "center",
+        fontWeight: "bold",
+        color: "black",
+        padding: 5
+    }
+});
