@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, Button, FlatList, StyleSheet,Dimensions } from 'react-native';
+
+import { View, Text, Button, FlatList, StyleSheet, Dimensions } from 'react-native';
+
 import { ListItem } from 'react-native-elements';
 import CategoryCard from '../../components/cards/CategoryCard';
 import Repository from '../../services/Repository';
@@ -70,9 +72,11 @@ const styles = StyleSheet.create({
     },
     MainContainer: {
         justifyContent: 'center',
-        alignItems:"center",
+
+        alignItems: "center",
         width: Dimensions.get('screen').width,
-        marginHorizontal:5
+        marginHorizontal: 5
+
     },
 });
 
