@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 import { Card, Image } from 'react-native-elements';
-import { colors } from '../styles/base';
+import { colors } from '../../styles/base';
 
 const CategoryCard = props => {
     return (
