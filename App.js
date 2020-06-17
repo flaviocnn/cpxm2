@@ -5,10 +5,11 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
-import Firebase, { FirebaseProvider } from './config/index';
-import Home from './screens/home/Home';
-import Signin from './screens/signin/Signin';
-import Signup from './screens/signup/Signup';
+import Firebase, { FirebaseProvider } from './src/config/index';
+import Home from './src/screens/home/Home';
+import Signin from './src/screens/signin/Signin';
+import Signup from './src/screens/signup/Signup';
+import Profile from './src/screens/profile/Profile';
 
 // stack che contiene signin e signup
 const AuthStack = createStackNavigator();
@@ -48,12 +49,12 @@ function RootTabNavigatorComponent(logged) {
             <MaterialCommunityIcons name="calendar-today" color={color} size={size} />
           ),
         }} />
-      <RootTabNavigator.Screen name="Profilo" component={Home}
+      <RootTabNavigator.Screen name="Profilo" component={Profile}
         initialParams={{ myname: "flavio" }}
         listeners={({ navigation, route }) => ({
           tabPress: e => {
             // Prevent default action
-            if (!route.logged) {
+            if (!route.params.logged) {
               e.preventDefault();
               // Do something with the `navigation` object
               navigation.navigate('Accesso');
