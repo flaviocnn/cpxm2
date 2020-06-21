@@ -25,7 +25,8 @@ function AuthStackComponent() {
 // navigator dell'app vera e propria
 const RootTabNavigator = createBottomTabNavigator();
 // Home Categorie Prenotazioni Profilo
-function RootTabNavigatorComponent(logged) {
+function RootTabNavigatorComponent({ logged }) {
+  console.log('rootnav' + logged)
   return (
     <RootTabNavigator.Navigator>
       <RootTabNavigator.Screen name="Home" component={Home} initialParams={{ myname: "flavio" }}
@@ -54,7 +55,7 @@ function RootTabNavigatorComponent(logged) {
         listeners={({ navigation, route }) => ({
           tabPress: e => {
             // Prevent default action
-            if (!route.params.logged) {
+            if (!logged) {
               e.preventDefault();
               // Do something with the `navigation` object
               navigation.navigate('Accesso');
@@ -95,9 +96,11 @@ export default function App() {
     // stack che contiene applicazione e auth
 
     <FirebaseProvider value={Firebase}>
-      <NavigationContainer theme={DefaultTheme}>
-        <RootStack.Navigator initialRouteName="Applicazione" mode="modal" headerMode="none">
-          <AuthStack.Screen name="Applicazione" component={RootTabNavigatorComponent} logged={isLogged} />
+      <NavigationContainer theme={DefaultTheme} >
+        <RootStack.Navigator initialRouteName="Applicazione" mode="modal" headerMode="none"  >
+          <AuthStack.Screen name="Applicazione">
+            {props => <RootTabNavigatorComponent {...props} logged={isLogged} />}
+          </AuthStack.Screen>
           <AuthStack.Screen name="Accesso" component={AuthStackComponent} />
         </RootStack.Navigator>
       </NavigationContainer>

@@ -32,8 +32,9 @@ class Signin extends Component {
             .then((res) => {
                 // logged successfully
                 console.log(res);
-                this.props.navigation.navigate('Profilo');
-            })
+                this.props.navigation.goBack();
+/*                 this.props.navigation.navigate('Home');
+ */            })
             .catch((reason) => {
                 // c'è n problema
                 console.info(reason);
