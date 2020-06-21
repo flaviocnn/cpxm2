@@ -27,6 +27,7 @@ const RootTabNavigator = createBottomTabNavigator();
 // Home Categorie Prenotazioni Profilo
 function RootTabNavigatorComponent({ logged }) {
   console.log('rootnav' + logged)
+  const debug = false;
   return (
     <RootTabNavigator.Navigator>
       <RootTabNavigator.Screen name="Home" component={Home} initialParams={{ myname: "flavio" }}
@@ -55,7 +56,7 @@ function RootTabNavigatorComponent({ logged }) {
         listeners={({ navigation, route }) => ({
           tabPress: e => {
             // Prevent default action
-            if (!logged) {
+            if (debug && !logged) {
               e.preventDefault();
               // Do something with the `navigation` object
               navigation.navigate('Accesso');

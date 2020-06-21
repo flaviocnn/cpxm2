@@ -1,6 +1,16 @@
 import React, { Component } from 'react';
 
-import { View, StyleSheet, Dimensions, ImageBackground, TouchableOpacity, Text, SafeAreaView, ScrollView } from 'react-native';
+import {
+    View,
+    StyleSheet,
+    Dimensions,
+    ImageBackground,
+    TouchableOpacity,
+    Text,
+    SafeAreaView,
+    ScrollView,
+    FlatList
+} from 'react-native';
 import Header from './components/Header';
 import Cashback from './components/Cashback';
 import ListItem from './components/ListItem';
@@ -33,14 +43,22 @@ class Profile extends Component {
         this.props.navigation.navigate('Accesso');
     }
 
+    keyExtractor = (item, index) => index.toString()
+
+    renderItem2 = ({ item }) => (
+        <ListItem icon={item.icon} description={item.description} />
+    )
+
     renderItems() {
+        console.log(this.state.itemList)
+        const il = this.state.itemList;
         return (
             <SafeAreaView style={styles.listContainer}>
-                <ScrollView>
-                    {this.state.itemList.map((item, key) => {
-                        <ListItem icon={item.icon} description={item.description} />
-                    })}
-                </ScrollView>
+                <FlatList
+                    keyExtractor={this.keyExtractor}
+                    data={il}
+                    renderItem={this.renderItem2}
+                />
             </SafeAreaView>
         );
     }
