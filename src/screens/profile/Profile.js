@@ -32,6 +32,30 @@ class Profile extends Component {
                     icon: 'account-box',
                     description: 'Account'
                 },
+                {
+                    icon: 'receipt',
+                    description: 'Anagrafica'
+                },
+                {
+                    icon: 'account-box',
+                    description: 'Account'
+                },
+                {
+                    icon: 'receipt',
+                    description: 'Anagrafica'
+                },
+                {
+                    icon: 'account-box',
+                    description: 'Account'
+                },
+                {
+                    icon: 'receipt',
+                    description: 'Anagrafica'
+                },
+                {
+                    icon: 'account-box',
+                    description: 'Account'
+                },
             ]
         }
         this.logoutHandler = this.logoutHandler.bind(this);
@@ -43,21 +67,16 @@ class Profile extends Component {
         this.props.navigation.navigate('Accesso');
     }
 
-    keyExtractor = (item, index) => index.toString()
-
-    renderItem2 = ({ item }) => (
-        <ListItem icon={item.icon} description={item.description} />
-    )
-
     renderItems() {
         console.log(this.state.itemList)
-        const il = this.state.itemList;
         return (
             <SafeAreaView style={styles.listContainer}>
                 <FlatList
-                    keyExtractor={this.keyExtractor}
-                    data={il}
-                    renderItem={this.renderItem2}
+                    keyExtractor={(item, index) => index.toString()}
+                    data={this.state.itemList}
+                    renderItem={({ item }) => (
+                        <ListItem icon={item.icon} description={item.description} />
+                    )}
                 />
             </SafeAreaView>
         );
