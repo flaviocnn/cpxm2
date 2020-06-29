@@ -3,14 +3,14 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import React from 'react';
 
-const ListItem = ({ icon, description }) => {
-    console.log('dentro');
+const ListItem = (props) => {
+    console.log(props);
     return (
         <View>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => props.navigation.navigate('Account')}>
                 <View style={styles.container}>
-                    <MaterialIcons name={icon} color='#6D6D6D' size={33} />
-                    <Text style={styles.text}>{description}</Text>
+                    <MaterialIcons name={props.icon} color='#6D6D6D' size={33} />
+                    <Text style={styles.text}>{props.title}</Text>
                     <MaterialIcons name='keyboard-arrow-right' color='#6D6D6D' size={33} />
                 </View>
             </TouchableOpacity>

@@ -3,33 +3,30 @@ import { db, auth } from '../config/firebase';
 
 const UserContext = React.createContext();
 
-const UserProvider = () => {
+const UserProvider = (props) => {
 
     const [registry, setRegistry] = useState('');
     const [subscription, setSubscription] = useState('');
     const [notifications, setNotifications] = useState('');
     const [promotions, setPromotions] = useState('');
 
-
-    getUser(async () => {
-        const snap = await db.collection('users').doc(auth.currentUser.uid).get();
-        const user = snap.data();
-        return user;
-    })
-
     useEffect(() => {
-        const {
-            registry,
-            subscription,
-            notifications,
-            promotions
-        } = getUser();
+        (async () => {
+            const snap = await db.collection('users').doc('8UT523BQcNnDz0NjSzma').get();
+            const user = snap.data();
+            const {
+                registry,
+                subscription,
+                notifications,
+                promotions
+            } = user
+            setRegistry(registry);
+            setSubscription(subscription);
+            setNotifications(notifications);
+            setPromotions(promotions);
+        })()
 
-        setRegistry(registry);
-        setSubscription(subscription);
-        setNotifications(notifications);
-        setPromotions(promotions);
-    })
+    }, [])
 
     return (
         <UserContext.Provider
@@ -44,7 +41,7 @@ const UserProvider = () => {
                 setPromotions
             }}
         >
-
+            {props.children}
         </UserContext.Provider>
     );
 

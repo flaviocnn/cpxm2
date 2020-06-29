@@ -10,6 +10,7 @@ import Home from './src/screens/home/Home';
 import Signin from './src/screens/signin/Signin';
 import Signup from './src/screens/signup/Signup';
 import Profile from './src/screens/profile/Profile';
+import { UserProvider } from './src/providers/UserProvider';
 
 // stack che contiene signin e signup
 const AuthStack = createStackNavigator();
@@ -37,11 +38,11 @@ function RootTabNavigatorComponent({ logged }) {
             <MaterialIcons name="home" color={color} size={size} />
           ),
         }} />
-      <RootTabNavigator.Screen name="Store" component={Home} initialParams={{ myname: "flavio" }}
+      <RootTabNavigator.Screen name="Preferiti" component={Home} initialParams={{ myname: "flavio" }}
         options={{
-          tabBarLabel: 'Categorie',
+          tabBarLabel: 'Preferiti',
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="store" color={color} size={size} />
+            <MaterialIcons name="favorite-border" color={color} size={size} />
           ),
         }} />
       <RootTabNavigator.Screen name="Prenotazioni" component={Home} initialParams={{ myname: "flavio" }}
@@ -95,17 +96,18 @@ export default function App() {
 
   return (
     // stack che contiene applicazione e auth
-
-    <FirebaseProvider value={Firebase}>
-      <NavigationContainer theme={DefaultTheme} >
-        <RootStack.Navigator initialRouteName="Applicazione" mode="modal" headerMode="none"  >
-          <AuthStack.Screen name="Applicazione">
-            {props => <RootTabNavigatorComponent {...props} logged={isLogged} />}
-          </AuthStack.Screen>
-          <AuthStack.Screen name="Accesso" component={AuthStackComponent} />
-        </RootStack.Navigator>
-      </NavigationContainer>
-    </FirebaseProvider>
+    <UserProvider>
+      <FirebaseProvider value={Firebase}>
+        <NavigationContainer theme={DefaultTheme} >
+          <RootStack.Navigator initialRouteName="Applicazione" mode="modal" headerMode="none"  >
+            <AuthStack.Screen name="Applicazione">
+              {props => <RootTabNavigatorComponent {...props} logged={isLogged} />}
+            </AuthStack.Screen>
+            <AuthStack.Screen name="Accesso" component={AuthStackComponent} />
+          </RootStack.Navigator>
+        </NavigationContainer>
+      </FirebaseProvider>
+    </UserProvider>
   )
 }
 
