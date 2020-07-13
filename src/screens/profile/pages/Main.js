@@ -14,7 +14,6 @@ import Header from '../components/Header';
 import Cashback from '../components/Cashback';
 import ListItem from '../components/ListItem';
 
-import Constants from 'expo-constants';
 import { withFirebaseHOC } from "../../../services/GlobalContext";
 import { UserContext } from '../../../providers/UserProvider';
 

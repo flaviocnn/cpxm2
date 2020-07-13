@@ -1,82 +1,140 @@
-import React, { Component } from 'react';
+import React, { Component, useContext, useState } from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-import { View, Text, Button, FlatList, StyleSheet, Dimensions } from 'react-native';
+import {
+    TouchableOpacity,
+    Text,
+    TouchableHighlight,
+    View,
+    Modal,
+    StyleSheet,
+    Dimensions
+} from 'react-native';
 
-import { ListItem } from 'react-native-elements';
-import CategoryCard from '../../components/cards/CategoryCard';
-import Repository from '../../services/Repository';
-import Constants from 'expo-constants';
+import HomeScreen from './pages/Main';
 
-export default class Home extends Component {
-    getCategories = async () => {
-        Repository.categories()
-            .then((results) => {
-                var categories = [];
-                results.forEach(function (doc) {
-                    let category = doc.data();
-                    category.id = doc.id;
-                    categories.push(category);
-                    //console.log(doc.id, " => ", doc.data());
-                });
-                this.setState({ categories })
-            })
-            .catch(err => console.info(err));
+import { withFirebaseHOC } from "../../services/GlobalContext";
+const HomeStack = createStackNavigator();
+class HomeStackScreen extends Component {
+
+    state = {
+        modalVisible: false
     }
 
-    keyExtractor = (item, index) => index.toString()
-
-    renderItem = ({ item }) => (
-        <ListItem
-            title={item.name}
-            subtitle={item.id}
-            leftAvatar={{
-                source: item.avatar_url && { uri: item.avatar_url },
-                title: item.name[0]
-            }}
-            bottomDivider
-            chevron
-        />
-    )
-
-    renderItem2 = ({ item }) => (
-        <CategoryCard
-            categoryItem={item}
-            bottomDivider
-            chevron
-        />
-    )
+    setModalVisible = (visible) => {
+        this.setState({ modalVisible: visible });
+    }
 
     render() {
+        const { modalVisible } = this.state;
         return (
-            <View style={styles.container}>
-                <Button
-                    title="Carica Categorie"
-                    onPress={this.getCategories}
-                />
-                <FlatList
-                    keyExtractor={this.keyExtractor}
-                    data={this.state?.categories}
-                    renderItem={this.renderItem2}
-                    numColumns="2"
-                    contentContainerStyle={styles.MainContainer}
-                />
-            </View>
+            <HomeStack.Navigator
+                initialRouteName="Home"
+                screenOptions={{
+                    headerStyle: {
+                        backgroundColor: '#fff',
+                    },
+                    headerTintColor: '#fff',
+                    headerTitleStyle: {
+                        fontWeight: 'bold',
+                    },
+                }}
+            >
+                <HomeStack.Screen name="Home" component={HomeScreen}
+                    options={{
+                        headerStyle: {
+                            backgroundColor: '#fff',
+                        },
+                        headerTintColor: '#323232',
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                        },
+                        headerRight: () => (
+                            <TouchableOpacity
+                                onPress={() => alert('This is a button!')}
+                                style={{ paddingRight: 20 }}
+                            >
+                                <MaterialIcons name="notifications-none" color='#323232' size={30} />
+                            </TouchableOpacity>
+                        ),
+                        headerTitle: () => (
+                            <View>
+                                <Modal
+                                    animationType="slide"
+                                    transparent={true}
+                                    visible={modalVisible}
+                                    onRequestClose={() => {
+                                        Alert.alert("Modal has been closed.");
+                                    }}
+                                >
+                                    <View style={styles.centeredView}>
+                                        <View style={styles.modalView}>
+                                            <Text style={styles.modalText}>Hello World!</Text>
+
+                                            <TouchableHighlight
+                                                style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
+                                                onPress={() => {
+                                                    this.setModalVisible(!modalVisible);
+                                                }}
+                                            >
+                                                <Text style={styles.textStyle}>Hide Modal</Text>
+                                            </TouchableHighlight>
+                                        </View>
+                                    </View>
+                                </Modal>
+                                <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 10 }} onPress={() => { this.setModalVisible(true) }}>
+                                    <Text style={{ fontSize: 16, color: '#323232' }}>{'Benevento'}</Text>
+                                    <MaterialIcons name="keyboard-arrow-down" color='#323232' size={35} />
+                                </TouchableOpacity>
+                            </View>
+
+                        ),
+
+                        headerTitleAlign: 'left'
+                    }} />
+            </HomeStack.Navigator>
         )
     }
 }
-
 const styles = StyleSheet.create({
-    container: {
+    centeredView: {
         flex: 1,
-        paddingTop: Constants.statusBarHeight,
-    },
-    MainContainer: {
-        justifyContent: 'center',
-
+        justifyContent: "center",
         alignItems: "center",
-        width: Dimensions.get('screen').width,
-        marginHorizontal: 5
-
+        marginTop: 22
     },
+    modalView: {
+        margin: 20,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
+    },
+    openButton: {
+        backgroundColor: "#F194FF",
+        borderRadius: 20,
+        padding: 10,
+        elevation: 2
+    },
+    textStyle: {
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center"
+    },
+    modalText: {
+        marginBottom: 15,
+        textAlign: "center"
+    }
 });
+
+export default withFirebaseHOC(HomeStackScreen);
 

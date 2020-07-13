@@ -6,7 +6,9 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { FontAwesome5 } from '@expo/vector-icons';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import Firebase, { FirebaseProvider } from './src/config/index';
-import Home from './src/screens/home/Home';
+/* import Home from './src/screens/home/HomeFlavio';
+ */
+import HomeStackScreen from './src/screens/home/Home';
 import Signin from './src/screens/signin/Signin';
 import Signup from './src/screens/signup/Signup';
 import Profile from './src/screens/profile/Profile';
@@ -31,21 +33,21 @@ function RootTabNavigatorComponent({ logged }) {
   const debug = false;
   return (
     <RootTabNavigator.Navigator>
-      <RootTabNavigator.Screen name="Home" component={Home} initialParams={{ myname: "flavio" }}
+      <RootTabNavigator.Screen name="Home" component={HomeStackScreen} initialParams={{ myname: "flavio" }}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="home" color={color} size={size} />
           ),
         }} />
-      <RootTabNavigator.Screen name="Preferiti" component={Home} initialParams={{ myname: "flavio" }}
+      <RootTabNavigator.Screen name="Preferiti" component={HomeStackScreen} initialParams={{ myname: "flavio" }}
         options={{
           tabBarLabel: 'Preferiti',
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="favorite-border" color={color} size={size} />
           ),
         }} />
-      <RootTabNavigator.Screen name="Prenotazioni" component={Home} initialParams={{ myname: "flavio" }}
+      <RootTabNavigator.Screen name="Prenotazioni" component={HomeStackScreen} initialParams={{ myname: "flavio" }}
         options={{
           tabBarLabel: 'Prenotazioni',
           tabBarIcon: ({ color, size }) => (
